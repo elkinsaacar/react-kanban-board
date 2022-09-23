@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import "./index.css";
 
 const KanbanBoard = (props) => {
@@ -7,23 +7,48 @@ const KanbanBoard = (props) => {
   // console.log(props);
   const stagesNames = ['Backlog', 'To Do', 'Ongoing', 'Done'];
   const IDsStages = [0, 1, 2, 3];
+  const [tasksList, SetTasksList] = useState(tasks);
 
   let stagesTasks = [];
   console.log(tasks);
   for (let i = 0; i < stagesNames.length; ++i) {
     stagesTasks.push([]);
   }
-  for (let task of tasks) {
+  for (let task of tasksList) {
     const stageId = task.stage;
     stagesTasks[stageId].push(task);
   }
 
   const taskBack = (name) => {
-    console.log(`taskBack ${name}`);
+    // console.log(`taskBack ${name}`);
+    let newtaskList = [];
+    for (let task of tasksList) {
+      if( task.name === name ){
+        newtaskList.push( {...task, stage: (task.stage-1)} );
+      } else {
+        newtaskList.push( {...task} );
+      }
+    }
+    /* console.log("-----");
+    console.log(newtaskList);
+    console.log("-----"); */
+    SetTasksList(newtaskList);
   }
 
   const taskNext = (name) => {
-    console.log(`taskNext ${name}`);
+    // console.log(`taskNext ${name}`);
+    let newtaskList = [];
+    for (let task of tasksList) {
+      if( task.name === name ){
+        newtaskList.push( {...task, stage: (task.stage+1)} );
+      } else {
+        newtaskList.push( {...task} );
+      }
+    }
+    /* console.log("-----");
+    console.log(newtaskList);
+    console.log("-----"); */
+    SetTasksList(newtaskList);
   }
 
   return (
